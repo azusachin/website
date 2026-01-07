@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AltcoinSEx 考古博物馆 - POW 币种分叉体验</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <div class="brand">
+          <span class="brand-mark">⛏️</span>
+          <div>
+            <h1>AltcoinSEx 考古博物馆</h1>
+            <p>一个专注 POW 币种考古与分叉实验的静态展示站</p>
+          </div>
+        </div>
+        <nav>
+          <a href="#experience">分叉体验</a>
+          <a href="#museum">博物馆</a>
+          <a href="#workflow">工作流</a>
+          <a href="#services">建设服务</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <h2>让 POW 历史重现，体验一分钟分叉。</h2>
+            <p>
+              altcoinsex.com 致力于保存与演示 POW 币种的分叉演进史，
+              带你体验从创世区块到个性化钱包的完整流程。
+            </p>
+            <div class="hero-actions">
+              <a class="primary" href="#experience">开始体验 · $1</a>
+              <a class="ghost" href="#services">了解建设服务</a>
+            </div>
+            <ul class="hero-highlights">
+              <li>支持 BTC/LTC/DASH 等主流 POW 生态</li>
+              <li>n8n 工作流自动分配虚拟机 & 自动编译钱包</li>
+              <li>实时回显编译日志与交付结果</li>
+            </ul>
+          </div>
+          <div class="hero-card">
+            <div class="card-header">博物馆藏品类型</div>
+            <ul>
+              <li>经典 PoW 分叉链路 & 技术演进</li>
+              <li>矿池、浏览器、钱包、交易所全栈复刻</li>
+              <li>社区级算力分流与代理策略</li>
+            </ul>
+            <div class="card-footer">加入我们一起考古 POW 宇宙。</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="experience" class="section">
+        <div class="container">
+          <div class="section-title">
+            <h3>首页分叉体验</h3>
+            <p>花一美元体验模拟分叉一个 POW 币种，生成你的定制化 Windows Qt 钱包。</p>
+          </div>
+          <div class="experience-grid">
+            <form id="fork-form" class="form-card">
+              <label>
+                币种名称
+                <input name="coinName" type="text" placeholder="例如：AuroraCoin" required />
+              </label>
+              <label>
+                币种缩写
+                <input name="coinSymbol" type="text" placeholder="例如：AUR" maxlength="10" required />
+              </label>
+              <label>
+                选择基础币种
+                <select name="baseChain" required>
+                  <option value="btc">比特币 BTC</option>
+                  <option value="ltc">莱特币 LTC</option>
+                  <option value="dash">达士币 DASH</option>
+                </select>
+              </label>
+              <label>
+                联系邮箱
+                <input name="email" type="email" placeholder="your@email.com" required />
+              </label>
+              <label>
+                上传图标 (PNG/JPG)
+                <input name="icon" type="file" accept="image/png,image/jpeg" required />
+              </label>
+              <div class="form-footer">
+                <p>支付完成后自动触发 n8n 工作流，分配虚拟机并编译钱包。</p>
+                <button type="submit">提交需求并发起支付 ($1)</button>
+              </div>
+            </form>
+            <div class="status-card">
+              <h4>实时编译回显</h4>
+              <p class="muted">支付成功后，我们将展示编译日志回显。</p>
+              <div id="status" class="status-log">
+                <p>等待提交体验表单...</p>
+              </div>
+              <div class="status-meta">
+                <span>状态：</span>
+                <span id="status-label">未开始</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="museum" class="section alt">
+        <div class="container">
+          <div class="section-title">
+            <h3>POW 币种考古博物馆</h3>
+            <p>从分叉源码、矿池参数到钱包外观，完整复刻 POW 生态演进史。</p>
+          </div>
+          <div class="grid">
+            <article>
+              <h4>分叉制作</h4>
+              <p>跟踪主链代码分歧、共识参数调整、创世块重建与经济模型重设计。</p>
+            </article>
+            <article>
+              <h4>矿池搭建</h4>
+              <p>支持 Stratum、PPLNS/PROP 等分配机制，模拟矿池收益曲线。</p>
+            </article>
+            <article>
+              <h4>区块链浏览器</h4>
+              <p>快速搭建浏览器索引服务，提供交易、地址、区块追踪。</p>
+            </article>
+            <article>
+              <h4>网页钱包</h4>
+              <p>生成轻量级 Web 钱包与桌面 Qt 钱包的统一视觉体验。</p>
+            </article>
+            <article>
+              <h4>矿池代理与算力分流</h4>
+              <p>配置多级代理、算力切换策略与负载平衡方案。</p>
+            </article>
+            <article>
+              <h4>中心化交易所</h4>
+              <p>快速搭建撮合引擎、K 线与风控策略，完整复刻 CEX 基础架构。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="workflow" class="section">
+        <div class="container">
+          <div class="section-title">
+            <h3>自动化工作流对接</h3>
+            <p>网站负责收集需求与支付，n8n 工作流负责分配虚拟机与编译交付。</p>
+          </div>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="step">1</div>
+              <div>
+                <h4>提交需求</h4>
+                <p>用户填写币种名称、缩写、图标与邮箱。</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="step">2</div>
+              <div>
+                <h4>发起支付</h4>
+                <p>网站调用支付接口，完成 $1 体验支付。</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="step">3</div>
+              <div>
+                <h4>触发 n8n</h4>
+                <p>支付成功后发送工作任务单，包含邮箱、币种参数与图标。</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="step">4</div>
+              <div>
+                <h4>实时回显</h4>
+                <p>接收编译日志与进度，回显给用户。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="services" class="section alt">
+        <div class="container">
+          <div class="section-title">
+            <h3>全栈建设服务</h3>
+            <p>从底层链到应用层，我们提供完整的 POW 生态搭建方案。</p>
+          </div>
+          <div class="grid">
+            <article>
+              <h4>POW 分叉咨询</h4>
+              <p>全流程指导分叉、参数调整、预挖与初始分配。</p>
+            </article>
+            <article>
+              <h4>基础设施部署</h4>
+              <p>一站式部署节点、矿池、浏览器与钱包。</p>
+            </article>
+            <article>
+              <h4>算力与代理</h4>
+              <p>设计矿池代理架构，实现算力分流与多币种并行挖矿。</p>
+            </article>
+            <article>
+              <h4>CEX 方案</h4>
+              <p>提供撮合、行情、风控与资产安全解决方案。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div>
+          <h4>AltcoinSEx</h4>
+          <p>POW 币种考古博物馆 · altcoinsex.com</p>
+        </div>
+        <div>
+          <p>联系邮箱：hello@altcoinsex.com</p>
+          <p>支持自定义需求与企业级合作。</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      window.__APP_CONFIG__ = {
+        paymentEndpoint: "/api/payment",
+        n8nJobEndpoint: "/api/n8n/jobs",
+        logStreamEndpoint: "/api/n8n/logs"
+      };
+    </script>
+    <script src="app.js"></script>
+  </body>
+</html>
