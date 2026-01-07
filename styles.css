@@ -289,6 +289,27 @@ input::placeholder {
   color: var(--muted);
 }
 
+.checkout-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.summary-list {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+  color: var(--muted);
+  margin-top: 12px;
+}
+
+.summary-total {
+  margin-top: 16px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+}
+
 .timeline {
   display: grid;
   gap: 20px;
