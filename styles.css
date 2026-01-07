@@ -265,6 +265,30 @@ input::placeholder {
   border: 1px solid var(--border);
 }
 
+.card-link {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.card-link:hover {
+  color: #7ef0e3;
+}
+
+.page-hero {
+  padding: 60px 0 40px;
+}
+
+.page-hero h2 {
+  font-size: clamp(26px, 3vw, 34px);
+  margin-bottom: 12px;
+}
+
+.page-content {
+  display: grid;
+  gap: 18px;
+  color: var(--muted);
+}
+
 .timeline {
   display: grid;
   gap: 20px;
