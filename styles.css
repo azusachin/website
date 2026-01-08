@@ -310,6 +310,19 @@ input::placeholder {
   color: var(--text);
 }
 
+.notice {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px dashed var(--border);
+  background: rgba(12, 15, 20, 0.7);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.notice strong {
+  color: var(--text);
+}
+
 .timeline {
   display: grid;
   gap: 20px;

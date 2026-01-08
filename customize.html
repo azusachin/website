@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>定制参数设置 - AltcoinSEx 考古博物馆</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <div class="brand">
+          <span class="brand-mark">⛏️</span>
+          <div>
+            <h1>AltcoinSEx 考古博物馆</h1>
+            <p>POW 币种分叉与考古演进展示</p>
+          </div>
+        </div>
+        <nav>
+          <a href="index.html#experience">分叉体验</a>
+          <a href="index.html#museum">博物馆</a>
+          <a href="index.html#workflow">工作流</a>
+          <a href="index.html#services">建设服务</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <div class="container">
+          <h2>定制个性化钱包参数</h2>
+          <p>填写币种名称、缩写与图标，完成支付后生成个性化 Windows Qt 钱包。</p>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="container experience-grid">
+          <form id="fork-form" class="form-card">
+            <label>
+              币种名称
+              <input name="coinName" type="text" placeholder="例如：AuroraCoin" required />
+            </label>
+            <label>
+              币种缩写
+              <input name="coinSymbol" type="text" placeholder="例如：AUR" maxlength="10" required />
+            </label>
+            <label>
+              选择基础币种
+              <select name="baseChain" required>
+                <option value="btc">比特币 BTC</option>
+                <option value="ltc">莱特币 LTC</option>
+                <option value="dash">达士币 DASH</option>
+              </select>
+            </label>
+            <label>
+              联系邮箱
+              <input name="email" type="email" placeholder="your@email.com" required />
+            </label>
+            <label>
+              上传图标 (PNG/JPG)
+              <input name="icon" type="file" accept="image/png,image/jpeg" required />
+            </label>
+            <div class="notice">
+              <strong>命名规则：</strong>禁止使用已知主流币种名称或缩写（如比特币/莱特币/狗狗币/达士币/以太坊/门罗币/zec/etc/sol/币安币/ok币/波场币等），系统将提示“禁止使用此名称”或“禁止使用此缩写”。
+            </div>
+            <div class="form-footer">
+              <p>确认参数后将进入支付步骤。</p>
+              <button type="submit">提交参数并前往支付 ($1)</button>
+            </div>
+          </form>
+          <div class="status-card">
+            <h4>处理进度</h4>
+            <p class="muted">支付成功后，我们将展示编译日志回显。</p>
+            <div id="status" class="status-log">
+              <p>等待提交体验表单...</p>
+            </div>
+            <div class="status-meta">
+              <span>状态：</span>
+              <span id="status-label">未开始</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div>
+          <h4>AltcoinSEx</h4>
+          <p>POW 币种考古博物馆 · altcoinsex.com</p>
+        </div>
+        <div>
+          <p>联系邮箱：hello@altcoinsex.com</p>
+          <p>支持自定义需求与企业级合作。</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      window.__APP_CONFIG__ = {
+        paymentEndpoint: "/api/payment",
+        jobEndpoint: "/api/jobs",
+        logStreamEndpoint: "/api/logs"
+      };
+    </script>
+    <script src="app.js"></script>
+  </body>
+</html>

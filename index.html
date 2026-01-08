@@ -35,13 +35,13 @@
               带你体验从创世区块到个性化钱包的完整流程。
             </p>
             <div class="hero-actions">
-              <a class="primary" href="#experience">开始体验 · $1</a>
+              <a class="primary" href="customize.html">开始体验 · $1</a>
               <a class="ghost" href="#services">了解建设服务</a>
               <a class="ghost" href="checkout.html">前往结账页面</a>
             </div>
             <ul class="hero-highlights">
               <li>支持 BTC/LTC/DASH 等主流 POW 生态</li>
-              <li>n8n 工作流自动分配虚拟机 & 自动编译钱包</li>
+              <li>自动分配虚拟机 & 自动编译钱包</li>
               <li>实时回显编译日志与交付结果</li>
             </ul>
           </div>
@@ -64,46 +64,23 @@
             <p>花一美元体验模拟分叉一个 POW 币种，生成你的定制化 Windows Qt 钱包。</p>
           </div>
           <div class="experience-grid">
-            <form id="fork-form" class="form-card">
-              <label>
-                币种名称
-                <input name="coinName" type="text" placeholder="例如：AuroraCoin" required />
-              </label>
-              <label>
-                币种缩写
-                <input name="coinSymbol" type="text" placeholder="例如：AUR" maxlength="10" required />
-              </label>
-              <label>
-                选择基础币种
-                <select name="baseChain" required>
-                  <option value="btc">比特币 BTC</option>
-                  <option value="ltc">莱特币 LTC</option>
-                  <option value="dash">达士币 DASH</option>
-                </select>
-              </label>
-              <label>
-                联系邮箱
-                <input name="email" type="email" placeholder="your@email.com" required />
-              </label>
-              <label>
-                上传图标 (PNG/JPG)
-                <input name="icon" type="file" accept="image/png,image/jpeg" required />
-              </label>
+            <div class="form-card">
+              <h4>立即开始定制</h4>
+              <p class="muted">
+                点击开始体验后，将进入定制参数页面，填写币种名称、缩写、图标与邮箱，完成支付即可生成个性化钱包。
+              </p>
               <div class="form-footer">
-                <p>支付完成后自动触发 n8n 工作流，分配虚拟机并编译钱包。</p>
-                <button type="submit">提交需求并发起支付 ($1)</button>
+                <a class="primary" href="customize.html">前往定制参数页面</a>
               </div>
-            </form>
+            </div>
             <div class="status-card">
-              <h4>实时编译回显</h4>
-              <p class="muted">支付成功后，我们将展示编译日志回显。</p>
-              <div id="status" class="status-log">
-                <p>等待提交体验表单...</p>
-              </div>
-              <div class="status-meta">
-                <span>状态：</span>
-                <span id="status-label">未开始</span>
-              </div>
+              <h4>体验流程</h4>
+              <p class="muted">提交参数后进入支付，完成后进入自动化编译与交付。</p>
+              <ul class="summary-list">
+                <li>填写币种名称、缩写与图标</li>
+                <li>确认支付 $1</li>
+                <li>收到编译完成与下载通知</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -153,8 +130,8 @@
       <section id="workflow" class="section">
         <div class="container">
           <div class="section-title">
-            <h3>自动化工作流对接</h3>
-            <p>网站负责收集需求与支付，n8n 工作流负责分配虚拟机与编译交付。</p>
+            <h3>自动化交付流程</h3>
+            <p>网站负责收集需求与支付，后台自动完成编译与交付。</p>
           </div>
           <div class="timeline">
             <div class="timeline-item">
@@ -174,8 +151,8 @@
             <div class="timeline-item">
               <div class="step">3</div>
               <div>
-                <h4>触发 n8n</h4>
-                <p>支付成功后发送工作任务单，包含邮箱、币种参数与图标。</p>
+                <h4>启动编译</h4>
+                <p>支付成功后发送任务单，包含邮箱、币种参数与图标。</p>
               </div>
             </div>
             <div class="timeline-item">
@@ -234,13 +211,5 @@
       </div>
     </footer>
 
-    <script>
-      window.__APP_CONFIG__ = {
-        paymentEndpoint: "/api/payment",
-        n8nJobEndpoint: "/api/n8n/jobs",
-        logStreamEndpoint: "/api/n8n/logs"
-      };
-    </script>
-    <script src="app.js"></script>
   </body>
 </html>
