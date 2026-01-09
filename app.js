@@ -113,6 +113,34 @@ const fetchOrderStatus = async (orderId) => {
   return response.json();
 };
 
+const applyAuthenticatedEmail = async () => {
+  if (!config.authSessionEndpoint) {
+    return;
+  }
+
+  const emailInputs = document.querySelectorAll("input[type=\"email\"]");
+  if (!emailInputs.length) {
+    return;
+  }
+
+  const response = await fetch(config.authSessionEndpoint);
+  if (!response.ok) {
+    return;
+  }
+
+  const data = await response.json();
+  const email = data?.user?.email;
+  if (!data?.authenticated || !email) {
+    return;
+  }
+
+  emailInputs.forEach((input) => {
+    input.value = email;
+    input.readOnly = true;
+    input.setAttribute("aria-readonly", "true");
+  });
+};
+
 const streamLogs = async (jobId) => {
   const response = await fetch(`${config.logStreamEndpoint}/${jobId}`);
   if (!response.ok) {
@@ -292,6 +320,8 @@ const init = async () => {
   if (!authed) {
     return;
   }
+
+  await applyAuthenticatedEmail();
 
   if (form) {
     form.addEventListener("submit", handleCustomizeSubmit);
