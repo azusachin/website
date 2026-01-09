@@ -6,7 +6,7 @@
     <title>定制参数设置 - AltcoinSEx 考古博物馆</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body data-requires-auth="true">
+  <body>
     <header class="site-header">
       <div class="container">
         <div class="brand">
@@ -35,7 +35,16 @@
 
       <section class="section alt">
         <div class="container experience-grid">
-          <form id="fork-form" class="form-card" data-order-flow="create">
+          <div class="form-card" data-section="unpaid">
+            <h3>需要先完成支付</h3>
+            <p class="muted">登录后可支付 $1 解锁定制表单。</p>
+            <button class="ghost" data-action="login">先用 Google 登录</button>
+            <button class="primary" data-action="pay">立即支付 $1</button>
+            <div class="notice">
+              支付成功后将自动解锁定制表单，并通过邮件发送订单确认信息。
+            </div>
+          </div>
+          <form id="customize-form" class="form-card hidden" data-section="paid">
             <label>
               币种名称
               <input name="coinName" type="text" placeholder="例如：AuroraCoin" required />
@@ -64,19 +73,19 @@
               <strong>命名规则：</strong>禁止使用已知主流币种名称或缩写（如比特币/莱特币/狗狗币/达士币/以太坊/门罗币/zec/etc/sol/币安币/ok币/波场币等），系统将提示“禁止使用此名称”或“禁止使用此缩写”。
             </div>
             <div class="form-footer">
-              <p>确认参数后将进入支付步骤（需先登录）。</p>
-              <button type="submit">提交参数并进入支付 ($1)</button>
+              <p>确认参数后将触发编译任务并发送邮件通知。</p>
+              <button type="submit">提交定制参数</button>
             </div>
           </form>
           <div class="status-card">
             <h4>处理进度</h4>
             <p class="muted">支付成功后，我们将展示编译日志回显。</p>
-            <div id="status" class="status-log">
+            <div id="customize-status" class="status-log">
               <p>等待提交体验表单...</p>
             </div>
             <div class="status-meta">
               <span>状态：</span>
-              <span id="status-label">未开始</span>
+              <span>未开始</span>
             </div>
           </div>
         </div>
@@ -98,13 +107,12 @@
 
     <script>
       window.__APP_CONFIG__ = {
-        authSessionEndpoint: "/api/auth/session",
-        authLoginUrl: "/login.html",
-        orderEndpoint: "/api/orders",
-        paymentEndpoint: "/api/payment",
-        logStreamEndpoint: "/api/logs"
+        apiBase: "/api",
+        clerkPublishableKey: "YOUR_CLERK_PUBLISHABLE_KEY",
+        loginReturnUrl: "customize.html"
       };
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

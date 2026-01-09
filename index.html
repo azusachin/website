@@ -35,9 +35,17 @@
               带你体验从创世区块到个性化钱包的完整流程。
             </p>
             <div class="hero-actions">
-              <a class="primary" href="customize.html">开始体验 · $1</a>
+              <button class="primary" data-action="login">用 Google 登录</button>
+              <a class="ghost" href="customize.html">进入定制页面</a>
               <a class="ghost" href="#services">了解建设服务</a>
-              <a class="ghost" href="checkout.html">前往结账页面</a>
+            </div>
+            <div class="user-inline hidden" data-section="user">
+              <img class="avatar" data-field="user-avatar" alt="用户头像" />
+              <div>
+                <div data-field="user-name"></div>
+                <div class="muted" data-field="user-email"></div>
+              </div>
+              <button class="ghost" data-action="logout">退出登录</button>
             </div>
             <ul class="hero-highlights">
               <li>支持 BTC/LTC/DASH 等主流 POW 生态</li>
@@ -67,7 +75,7 @@
             <div class="form-card">
               <h4>立即开始定制</h4>
               <p class="muted">
-                点击开始体验后，将进入定制参数页面并要求登录，填写币种名称、缩写、图标与邮箱，完成支付即可生成个性化钱包。
+                登录后进入定制参数页面，填写币种名称、缩写、图标与邮箱，完成支付即可生成个性化钱包。
               </p>
               <div class="form-footer">
                 <a class="primary" href="customize.html">前往定制参数页面</a>
@@ -77,7 +85,7 @@
               <h4>体验流程</h4>
               <p class="muted">提交参数后进入支付，完成后进入自动化编译与交付。</p>
               <ul class="summary-list">
-                <li>填写币种名称、缩写与图标</li>
+                <li>Google 登录获取邮箱与姓名</li>
                 <li>确认支付 $1</li>
                 <li>收到编译完成与下载通知</li>
               </ul>
@@ -211,5 +219,14 @@
       </div>
     </footer>
 
+    <script>
+      window.__APP_CONFIG__ = {
+        apiBase: "/api",
+        clerkPublishableKey: "YOUR_CLERK_PUBLISHABLE_KEY",
+        loginReturnUrl: "customize.html"
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>

@@ -347,6 +347,25 @@ input::placeholder {
   color: var(--accent);
 }
 
+.hidden {
+  display: none !important;
+}
+
+.user-inline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  object-fit: cover;
+}
+
 .timeline {
   display: grid;
   gap: 20px;
