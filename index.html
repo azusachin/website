@@ -35,17 +35,9 @@
               带你体验从创世区块到个性化钱包的完整流程。
             </p>
             <div class="hero-actions">
-              <button class="primary" data-action="login">用 Google 登录</button>
+              <a class="primary" href="login.html">登录后开始体验</a>
               <a class="ghost" href="customize.html">进入定制页面</a>
               <a class="ghost" href="#services">了解建设服务</a>
-            </div>
-            <div class="user-inline hidden" data-section="user">
-              <img class="avatar" data-field="user-avatar" alt="用户头像" />
-              <div>
-                <div data-field="user-name"></div>
-                <div class="muted" data-field="user-email"></div>
-              </div>
-              <button class="ghost" data-action="logout">退出登录</button>
             </div>
             <ul class="hero-highlights">
               <li>支持 BTC/LTC/DASH 等主流 POW 生态</li>
@@ -219,14 +211,5 @@
       </div>
     </footer>
 
-    <script>
-      window.__APP_CONFIG__ = {
-        apiBase: "/api",
-        clerkPublishableKey: "YOUR_CLERK_PUBLISHABLE_KEY",
-        loginReturnUrl: "customize.html"
-      };
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"></script>
-    <script src="app.js"></script>
   </body>
 </html>

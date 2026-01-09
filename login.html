@@ -38,7 +38,10 @@
           <div class="form-card">
             <h3>选择登录方式</h3>
             <div class="auth-actions">
-              <button class="auth-button" data-action="login">使用 Google 登录</button>
+              <a class="auth-button" href="/api/auth/login/google">使用 Google 登录</a>
+              <a class="auth-button" href="/api/auth/login/facebook">使用 Facebook 登录</a>
+              <a class="auth-button" href="/api/auth/login/microsoft">使用 Microsoft 登录</a>
+              <a class="auth-button" href="/api/auth/login/email">使用邮箱验证码登录</a>
             </div>
             <div class="notice">
               登录后将进入定制参数页面，再进行支付与订单创建。
@@ -69,14 +72,5 @@
       </div>
     </footer>
 
-    <script>
-      window.__APP_CONFIG__ = {
-        apiBase: "/api",
-        clerkPublishableKey: "YOUR_CLERK_PUBLISHABLE_KEY",
-        loginReturnUrl: "customize.html"
-      };
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"></script>
-    <script src="app.js"></script>
   </body>
 </html>

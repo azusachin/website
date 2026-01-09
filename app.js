@@ -1,21 +1,10 @@
-// 全站通用脚本：登录、付费状态判断、下单、支付
+// 前端通用脚本（非 Clerk 版本）
+const form = document.getElementById("fork-form");
+const statusLog = document.getElementById("status");
+const statusLabel = document.getElementById("status-label");
+const checkoutForm = document.getElementById("checkout-form");
+const paymentStatus = document.getElementById("payment-status");
 const config = window.__APP_CONFIG__ || {};
-const clerkPublishableKey = config.clerkPublishableKey;
-
-const elements = {
-  loginButton: document.querySelector("[data-action='login']"),
-  logoutButton: document.querySelector("[data-action='logout']"),
-  userPanel: document.querySelector("[data-section='user']"),
-  userEmail: document.querySelector("[data-field='user-email']"),
-  userName: document.querySelector("[data-field='user-name']"),
-  userAvatar: document.querySelector("[data-field='user-avatar']"),
-  paidPanel: document.querySelector("[data-section='paid']"),
-  unpaidPanel: document.querySelector("[data-section='unpaid']"),
-  payButton: document.querySelector("[data-action='pay']"),
-  customizeForm: document.getElementById("customize-form"),
-  customizeStatus: document.getElementById("customize-status"),
-  paymentStatus: document.getElementById("payment-status")
-};
 
 const forbiddenNames = [
   "bitcoin",
@@ -60,38 +49,89 @@ const forbiddenSymbols = [
   "trx"
 ];
 
-const show = (element) => {
-  if (element) {
-    element.classList.remove("hidden");
-  }
-};
-
-const hide = (element) => {
-  if (element) {
-    element.classList.add("hidden");
-  }
-};
-
-const setText = (element, value) => {
-  if (element) {
-    element.textContent = value || "";
-  }
-};
-
-const setAvatar = (element, url) => {
-  if (element) {
-    element.src = url || "";
-  }
-};
-
-const appendStatus = (message) => {
-  if (!elements.customizeStatus) {
+const appendLog = (message) => {
+  if (!statusLog) {
     return;
   }
   const entry = document.createElement("p");
   entry.textContent = message;
-  elements.customizeStatus.appendChild(entry);
-  elements.customizeStatus.scrollTop = elements.customizeStatus.scrollHeight;
+  statusLog.appendChild(entry);
+  statusLog.scrollTop = statusLog.scrollHeight;
+};
+
+const setStatus = (text) => {
+  if (!statusLabel) {
+    return;
+  }
+  statusLabel.textContent = text;
+};
+
+const createPayment = async (payload) => {
+  const response = await fetch(config.paymentEndpoint, {
+    method: "POST",
+    body: payload
+  });
+
+  if (!response.ok) {
+    throw new Error("支付请求失败，请稍后再试。");
+  }
+
+  return response.json();
+};
+
+const requestJob = async (payload) => {
+  const response = await fetch(config.jobEndpoint, {
+    method: "POST",
+    body: payload
+  });
+
+  if (!response.ok) {
+    throw new Error("任务触发失败，请联系管理员。");
+  }
+
+  return response.json();
+};
+
+const requestOrder = async (payload) => {
+  const response = await fetch(config.orderEndpoint, {
+    method: "POST",
+    body: payload
+  });
+
+  if (!response.ok) {
+    throw new Error("订单创建失败，请联系管理员。");
+  }
+
+  return response.json();
+};
+
+const fetchOrderStatus = async (orderId) => {
+  const response = await fetch(`${config.orderEndpoint}/${orderId}`);
+  if (!response.ok) {
+    throw new Error("订单状态查询失败。");
+  }
+  return response.json();
+};
+
+const streamLogs = async (jobId) => {
+  const response = await fetch(`${config.logStreamEndpoint}/${jobId}`);
+  if (!response.ok) {
+    appendLog("暂时无法获取日志回显。");
+    return;
+  }
+
+  const data = await response.json();
+  if (Array.isArray(data.logs)) {
+    data.logs.forEach((line) => appendLog(line));
+  }
+};
+
+const demoFlow = () => {
+  appendLog("演示模式：支付请求已模拟完成。");
+  appendLog("演示模式：任务已提交至系统。");
+  appendLog("编译中... 10%/50%/80%/100%");
+  appendLog("钱包生成完成，下载链接已发送到邮箱。");
+  setStatus("完成");
 };
 
 const isForbidden = (value, list) => {
@@ -104,198 +144,164 @@ const validateInputs = (data) => {
   const symbol = data.get("coinSymbol")?.toString() || "";
 
   if (isForbidden(name, forbiddenNames)) {
-    appendStatus("禁止使用此名称");
+    appendLog("禁止使用此名称");
+    setStatus("失败");
     return false;
   }
 
   if (isForbidden(symbol, forbiddenSymbols)) {
-    appendStatus("禁止使用此缩写");
+    appendLog("禁止使用此缩写");
+    setStatus("失败");
     return false;
   }
 
   return true;
 };
 
-const loadClerk = async () => {
-  if (!clerkPublishableKey || !window.Clerk) {
-    return null;
-  }
-  await window.Clerk.load({ publishableKey: clerkPublishableKey });
-  return window.Clerk;
-};
+const getReturnUrl = () => encodeURIComponent(window.location.pathname + window.location.search);
 
-const getAuthToken = async () => {
-  if (!window.Clerk || !window.Clerk.session) {
-    return null;
+const requireAuth = async () => {
+  if (!document.body?.dataset.requiresAuth) {
+    return true;
   }
-  return window.Clerk.session.getToken();
-};
 
-const fetchMe = async () => {
-  if (!config.apiBase || !config.apiBase.startsWith("/")) {
-    return { authenticated: false };
+  if (!config.authSessionEndpoint) {
+    return true;
   }
-  const token = await getAuthToken();
-  const response = await fetch(`${config.apiBase}/me`, {
-    headers: token ? { Authorization: `Bearer ${token}` } : {}
-  });
+
+  const response = await fetch(config.authSessionEndpoint);
   if (!response.ok) {
-    return { authenticated: false };
+    window.location.href = `${config.authLoginUrl || "/login.html"}?returnUrl=${getReturnUrl()}`;
+    return false;
   }
-  return response.json();
+
+  const data = await response.json();
+  if (!data || !data.authenticated) {
+    window.location.href = `${config.authLoginUrl || "/login.html"}?returnUrl=${getReturnUrl()}`;
+    return false;
+  }
+
+  return true;
 };
 
-const updateUserUI = (payload) => {
-  if (!payload || !payload.authenticated) {
-    hide(elements.userPanel);
+const handleCustomizeSubmit = async (event) => {
+  event.preventDefault();
+  if (!statusLog) {
+    return;
+  }
+  statusLog.innerHTML = "";
+  setStatus("处理中");
+
+  const formData = new FormData(form);
+  formData.append("price", "1");
+  formData.append("currency", "USD");
+
+  if (!validateInputs(formData)) {
     return;
   }
 
-  show(elements.userPanel);
-  if (elements.loginButton) {
-    elements.loginButton.classList.add("hidden");
-  }
-  setText(elements.userEmail, payload.user?.email);
-  setText(elements.userName, payload.user?.name);
-  setAvatar(elements.userAvatar, payload.user?.avatar);
+  appendLog("正在发起支付请求...");
 
-  if (payload.paid) {
-    show(elements.paidPanel);
-    hide(elements.unpaidPanel);
-  } else {
-    show(elements.unpaidPanel);
-    hide(elements.paidPanel);
-  }
-};
-
-const handleLogin = async () => {
-  if (!window.Clerk) {
-    alert("登录组件未初始化，请检查 Clerk 配置。");
+  if (!config.paymentEndpoint || !config.jobEndpoint) {
+    demoFlow();
     return;
   }
-  window.Clerk.openSignIn({ redirectUrl: config.loginReturnUrl || window.location.href });
+
+  try {
+    const paymentResult = await createPayment(formData);
+    appendLog(`支付已创建：${paymentResult.reference || "订单已生成"}`);
+
+    if (paymentResult.paymentUrl) {
+      appendLog("请在新窗口完成支付...");
+      window.open(paymentResult.paymentUrl, "_blank");
+    }
+
+    const jobPayload = new FormData();
+    jobPayload.append("email", formData.get("email"));
+    jobPayload.append("coinName", formData.get("coinName"));
+    jobPayload.append("coinSymbol", formData.get("coinSymbol"));
+    jobPayload.append("baseChain", formData.get("baseChain"));
+    jobPayload.append("icon", formData.get("icon"));
+    jobPayload.append("paymentRef", paymentResult.reference || "pending");
+
+    appendLog("正在触发任务...");
+    const jobResult = await requestJob(jobPayload);
+    appendLog(`任务已启动：${jobResult.jobId || "任务已创建"}`);
+    setStatus("编译中");
+
+    if (jobResult.jobId && config.logStreamEndpoint) {
+      appendLog("开始获取编译日志...");
+      await streamLogs(jobResult.jobId);
+    }
+  } catch (error) {
+    appendLog(error.message || "发生未知错误。");
+    setStatus("失败");
+  }
 };
 
-const handleLogout = async () => {
-  if (!window.Clerk) {
+const handleCheckoutSubmit = async (event) => {
+  event.preventDefault();
+  const params = new URLSearchParams(window.location.search);
+  const orderIdFromQuery = params.get("orderId");
+  const orderIdFromInput = checkoutForm?.elements?.orderId?.value?.trim();
+  const orderId = orderIdFromQuery || orderIdFromInput;
+
+  if (!orderId) {
+    alert("缺少订单编号，请先创建订单。");
     return;
   }
-  await window.Clerk.signOut();
-  window.location.reload();
-};
 
-const createCheckout = async () => {
-  const token = await getAuthToken();
-  const response = await fetch(`${config.apiBase}/checkout`, {
-    method: "POST",
-    headers: token ? { Authorization: `Bearer ${token}` } : {}
-  });
-  if (!response.ok) {
-    throw new Error("创建支付失败，请稍后再试。");
+  if (!config.paymentEndpoint) {
+    alert("支付接口未配置。");
+    return;
   }
-  return response.json();
-};
 
-const createOrder = async (formData) => {
-  const token = await getAuthToken();
-  const response = await fetch(`${config.apiBase}/orders`, {
-    method: "POST",
-    headers: token ? { Authorization: `Bearer ${token}` } : {},
-    body: formData
-  });
-  if (!response.ok) {
-    throw new Error("订单创建失败，请稍后再试。");
+  const payload = new FormData();
+  payload.append("orderId", orderId);
+  const paymentResult = await createPayment(payload);
+  if (paymentResult.paymentUrl) {
+    window.location.href = paymentResult.paymentUrl;
+    return;
   }
-  return response.json();
-};
 
-const fetchOrderStatus = async (orderId) => {
-  const token = await getAuthToken();
-  const response = await fetch(`${config.apiBase}/orders/${orderId}`, {
-    headers: token ? { Authorization: `Bearer ${token}` } : {}
-  });
-  if (!response.ok) {
-    throw new Error("订单状态查询失败。");
+  if (config.paymentReturnUrl) {
+    window.location.href = `${config.paymentReturnUrl}?orderId=${orderId}`;
   }
-  return response.json();
 };
 
-const handlePaymentStatus = async () => {
-  if (!elements.paymentStatus) {
+const renderPaymentStatus = async () => {
+  if (!paymentStatus || !config.orderEndpoint) {
     return;
   }
   const orderId = new URLSearchParams(window.location.search).get("orderId");
   if (!orderId) {
-    elements.paymentStatus.textContent = "未找到订单编号。";
+    paymentStatus.innerHTML = "<p>未找到订单编号。</p>";
     return;
   }
 
   try {
     const status = await fetchOrderStatus(orderId);
-    elements.paymentStatus.innerHTML = `<p>订单号：${orderId}</p><p>状态：${status.status || "处理中"}</p>`;
+    paymentStatus.innerHTML = `<p>订单号：${orderId}</p><p>状态：${status.status || "处理中"}</p>`;
   } catch (error) {
-    elements.paymentStatus.textContent = error.message || "查询失败";
-  }
-};
-
-const handleCustomizeSubmit = async (event) => {
-  event.preventDefault();
-  if (!elements.customizeForm) {
-    return;
-  }
-  if (elements.customizeStatus) {
-    elements.customizeStatus.innerHTML = "";
-  }
-
-  const formData = new FormData(elements.customizeForm);
-  if (!validateInputs(formData)) {
-    return;
-  }
-
-  appendStatus("正在提交订单...");
-
-  try {
-    const result = await createOrder(formData);
-    appendStatus(`订单已提交：${result.orderId || "已创建"}`);
-    appendStatus("编译进度将通过邮件通知。");
-  } catch (error) {
-    appendStatus(error.message || "提交失败");
+    paymentStatus.innerHTML = `<p>${error.message || "查询失败"}</p>`;
   }
 };
 
 const init = async () => {
-  const clerk = await loadClerk();
-
-  if (elements.loginButton) {
-    elements.loginButton.addEventListener("click", handleLogin);
-  }
-  if (elements.logoutButton) {
-    elements.logoutButton.addEventListener("click", handleLogout);
+  const authed = await requireAuth();
+  if (!authed) {
+    return;
   }
 
-  if (elements.payButton) {
-    elements.payButton.addEventListener("click", async () => {
-      try {
-        const checkout = await createCheckout();
-        if (checkout.url) {
-          window.location.href = checkout.url;
-        }
-      } catch (error) {
-        alert(error.message || "支付发起失败");
-      }
-    });
+  if (form) {
+    form.addEventListener("submit", handleCustomizeSubmit);
   }
-
-  if (elements.customizeForm) {
-    elements.customizeForm.addEventListener("submit", handleCustomizeSubmit);
+  if (checkoutForm) {
+    checkoutForm.addEventListener("submit", handleCheckoutSubmit);
   }
-
-  if (clerk) {
-    const payload = await fetchMe();
-    updateUserUI(payload);
+  if (paymentStatus) {
+    await renderPaymentStatus();
   }
-
-  await handlePaymentStatus();
 };
 
 init();

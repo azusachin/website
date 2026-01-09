@@ -6,7 +6,7 @@
     <title>结账 - AltcoinSEx 考古博物馆</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
+  <body data-requires-auth="true">
     <header class="site-header">
       <div class="container">
         <div class="brand">
@@ -45,13 +45,29 @@
             </ul>
             <div class="summary-total">总计：$1.00</div>
           </div>
-          <div class="form-card">
-            <h3>发起支付</h3>
-            <p class="muted">仅支持信用卡/Apple Pay，支付成功后自动解锁定制服务。</p>
+          <form id="checkout-form" class="form-card">
+            <h3>填写支付信息</h3>
+            <label>
+              联系邮箱
+              <input type="email" placeholder="your@email.com" required />
+            </label>
+            <label>
+              订单编号
+              <input name="orderId" type="text" placeholder="可选：填写体验订单号" />
+            </label>
+            <label>
+              支付方式
+              <select required>
+                <option value="card">信用卡/借记卡</option>
+                <option value="crypto">USDT/USDC</option>
+                <option value="paypal">PayPal</option>
+              </select>
+            </label>
             <div class="form-footer">
-              <button class="primary" data-action="pay">立即支付 $1</button>
+              <p>支付完成后，我们将把编译日志实时推送给你。</p>
+              <button type="submit">立即支付 $1</button>
             </div>
-          </div>
+          </form>
         </div>
       </section>
     </main>
@@ -70,12 +86,13 @@
     </footer>
     <script>
       window.__APP_CONFIG__ = {
-        apiBase: "/api",
-        clerkPublishableKey: "YOUR_CLERK_PUBLISHABLE_KEY",
-        loginReturnUrl: "checkout.html"
+        authSessionEndpoint: "/api/auth/session",
+        authLoginUrl: "/login.html",
+        orderEndpoint: "/api/orders",
+        paymentEndpoint: "/api/payment",
+        paymentReturnUrl: "/payment-return.html"
       };
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
