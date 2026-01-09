@@ -366,55 +366,6 @@ input::placeholder {
   object-fit: cover;
 }
 
-.admin-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
-}
-
-.admin-list {
-  display: grid;
-  gap: 12px;
-}
-
-.admin-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 12px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  background: rgba(12, 15, 20, 0.7);
-}
-
-.admin-actions {
-  display: grid;
-  gap: 8px;
-}
-
-.admin-actions button {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text);
-  padding: 6px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.admin-actions button:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-textarea {
-  background: rgba(15, 19, 26, 0.9);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 10px 12px;
-  color: var(--text);
-}
-
 .timeline {
   display: grid;
   gap: 20px;
