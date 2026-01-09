@@ -6,7 +6,7 @@
     <title>定制参数设置 - AltcoinSEx 考古博物馆</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
+  <body data-requires-auth="true">
     <header class="site-header">
       <div class="container">
         <div class="brand">
@@ -19,7 +19,7 @@
         <nav>
           <a href="index.html#experience">分叉体验</a>
           <a href="index.html#museum">博物馆</a>
-          <a href="index.html#workflow">工作流</a>
+          <a href="index.html#workflow">交付流程</a>
           <a href="index.html#services">建设服务</a>
         </nav>
       </div>
@@ -35,7 +35,7 @@
 
       <section class="section alt">
         <div class="container experience-grid">
-          <form id="fork-form" class="form-card">
+          <form id="fork-form" class="form-card" data-order-flow="create">
             <label>
               币种名称
               <input name="coinName" type="text" placeholder="例如：AuroraCoin" required />
@@ -64,8 +64,8 @@
               <strong>命名规则：</strong>禁止使用已知主流币种名称或缩写（如比特币/莱特币/狗狗币/达士币/以太坊/门罗币/zec/etc/sol/币安币/ok币/波场币等），系统将提示“禁止使用此名称”或“禁止使用此缩写”。
             </div>
             <div class="form-footer">
-              <p>确认参数后将进入支付步骤。</p>
-              <button type="submit">提交参数并前往支付 ($1)</button>
+              <p>确认参数后将进入支付步骤（需先登录）。</p>
+              <button type="submit">提交参数并进入支付 ($1)</button>
             </div>
           </form>
           <div class="status-card">
@@ -98,8 +98,10 @@
 
     <script>
       window.__APP_CONFIG__ = {
+        authSessionEndpoint: "/api/auth/session",
+        authLoginUrl: "/login.html",
+        orderEndpoint: "/api/orders",
         paymentEndpoint: "/api/payment",
-        jobEndpoint: "/api/jobs",
         logStreamEndpoint: "/api/logs"
       };
     </script>

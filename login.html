@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>登录 - AltcoinSEx 考古博物馆</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <div class="brand">
+          <span class="brand-mark">⛏️</span>
+          <div>
+            <h1>AltcoinSEx 考古博物馆</h1>
+            <p>POW 币种分叉与考古演进展示</p>
+          </div>
+        </div>
+        <nav>
+          <a href="index.html#experience">分叉体验</a>
+          <a href="index.html#museum">博物馆</a>
+          <a href="index.html#workflow">交付流程</a>
+          <a href="index.html#services">建设服务</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <div class="container">
+          <h2>登录后继续</h2>
+          <p>为了防止滥用与女巫攻击，定制与支付仅对已登录用户开放。</p>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="container experience-grid">
+          <div class="form-card">
+            <h3>选择登录方式</h3>
+            <div class="auth-actions">
+              <a class="auth-button" href="/api/auth/login/google">使用 Google 登录</a>
+              <a class="auth-button" href="/api/auth/login/facebook">使用 Facebook 登录</a>
+              <a class="auth-button" href="/api/auth/login/microsoft">使用 Microsoft 登录</a>
+              <a class="auth-button" href="/api/auth/login/email">使用邮箱验证码登录</a>
+            </div>
+            <div class="notice">
+              登录后将进入定制参数页面，再进行支付与订单创建。
+            </div>
+          </div>
+          <div class="status-card">
+            <h4>登录说明</h4>
+            <ul class="summary-list">
+              <li>平台只会获取基础资料（邮箱/昵称/头像）</li>
+              <li>成功登录后会自动返回来源页面</li>
+              <li>如遇问题请联系 hello@altcoinsex.com</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div>
+          <h4>AltcoinSEx</h4>
+          <p>POW 币种考古博物馆 · altcoinsex.com</p>
+        </div>
+        <div>
+          <p>联系邮箱：hello@altcoinsex.com</p>
+          <p>支持自定义需求与企业级合作。</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      window.__APP_CONFIG__ = {
+        authSessionEndpoint: "/api/auth/session",
+        authLoginUrl: "/login.html"
+      };
+    </script>
+    <script src="app.js"></script>
+  </body>
+</html>

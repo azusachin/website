@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>结账 - AltcoinSEx 考古博物馆</title>
+    <title>支付结果 - AltcoinSEx 考古博物馆</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body data-requires-auth="true">
@@ -28,46 +28,30 @@
     <main>
       <section class="page-hero">
         <div class="container">
-          <h2>体验结账</h2>
-          <p>确认你的分叉体验信息，完成支付后将自动触发编译与交付。</p>
+          <h2>支付结果</h2>
+          <p>我们正在确认你的订单状态，请稍候。</p>
         </div>
       </section>
 
       <section class="section alt">
-        <div class="container checkout-grid">
-          <div class="form-card">
-            <h3>订单信息</h3>
-            <ul class="summary-list">
-              <li>服务：POW 币种分叉模拟体验</li>
-              <li>包含：个性化 Windows Qt 钱包</li>
-              <li>交付：编译完成邮件通知 + 下载链接</li>
-              <li>处理时间：预计 5-10 分钟</li>
-            </ul>
-            <div class="summary-total">总计：$1.00</div>
-          </div>
-          <form id="checkout-form" class="form-card" data-order-flow="pay">
-            <h3>填写支付信息</h3>
-            <label>
-              联系邮箱
-              <input type="email" placeholder="your@email.com" required />
-            </label>
-            <label>
-              订单编号
-              <input type="text" placeholder="可选：填写体验订单号" />
-            </label>
-            <label>
-              支付方式
-              <select required>
-                <option value="card">信用卡/借记卡</option>
-                <option value="crypto">USDT/USDC</option>
-                <option value="paypal">PayPal</option>
-              </select>
-            </label>
-            <div class="form-footer">
-              <p>支付完成后，我们将把编译日志实时推送给你。</p>
-              <button type="submit">立即支付 $1</button>
+        <div class="container experience-grid">
+          <div class="status-card">
+            <h4>订单状态</h4>
+            <div id="payment-status" class="status-log">
+              <p>正在查询订单...</p>
             </div>
-          </form>
+          </div>
+          <div class="form-card">
+            <h3>下一步</h3>
+            <ul class="summary-list">
+              <li>支付成功后将收到确认邮件</li>
+              <li>编译完成会发送下载链接</li>
+              <li>如需帮助请联系 hello@altcoinsex.com</li>
+            </ul>
+            <div class="form-footer">
+              <a class="primary" href="customize.html">返回定制页面</a>
+            </div>
+          </div>
         </div>
       </section>
     </main>
@@ -84,13 +68,12 @@
         </div>
       </div>
     </footer>
+
     <script>
       window.__APP_CONFIG__ = {
         authSessionEndpoint: "/api/auth/session",
         authLoginUrl: "/login.html",
-        orderEndpoint: "/api/orders",
-        paymentEndpoint: "/api/payment",
-        paymentReturnUrl: "/payment-return.html"
+        orderEndpoint: "/api/orders"
       };
     </script>
     <script src="app.js"></script>
