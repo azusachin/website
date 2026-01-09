@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>支付结果 - AltcoinSEx 考古博物馆</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-requires-auth="true">
+    <header class="site-header">
+      <div class="container">
+        <div class="brand">
+          <span class="brand-mark">⛏️</span>
+          <div>
+            <h1>AltcoinSEx 考古博物馆</h1>
+            <p>POW 币种分叉与考古演进展示</p>
+          </div>
+        </div>
+        <nav>
+          <a href="index.html#experience">分叉体验</a>
+          <a href="index.html#museum">博物馆</a>
+          <a href="index.html#workflow">交付流程</a>
+          <a href="index.html#services">建设服务</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <div class="container">
+          <h2>支付结果</h2>
+          <p>我们正在确认你的订单状态，请稍候。</p>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="container experience-grid">
+          <div class="status-card">
+            <h4>订单状态</h4>
+            <div id="payment-status" class="status-log">
+              <p>正在查询订单...</p>
+            </div>
+          </div>
+          <div class="form-card">
+            <h3>下一步</h3>
+            <ul class="summary-list">
+              <li>支付成功后将收到确认邮件</li>
+              <li>编译完成会发送下载链接</li>
+              <li>如需帮助请联系 hello@altcoinsex.com</li>
+            </ul>
+            <div class="form-footer">
+              <a class="primary" href="customize.html">返回定制页面</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div>
+          <h4>AltcoinSEx</h4>
+          <p>POW 币种考古博物馆 · altcoinsex.com</p>
+        </div>
+        <div>
+          <p>联系邮箱：hello@altcoinsex.com</p>
+          <p>支持自定义需求与企业级合作。</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      window.__APP_CONFIG__ = {
+        authSessionEndpoint: "/api/auth/session",
+        authLoginUrl: "/login.html",
+        orderEndpoint: "/api/orders"
+      };
+    </script>
+    <script src="app.js"></script>
+  </body>
+</html>
