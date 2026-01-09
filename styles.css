@@ -55,6 +55,10 @@ img {
   flex-wrap: wrap;
 }
 
+.site-header nav {
+  flex-wrap: wrap;
+}
+
 .brand {
   display: flex;
   align-items: center;
@@ -413,5 +417,66 @@ input::placeholder {
   .hero-actions {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .hero {
+    padding: 60px 0 40px;
+  }
+
+  .status-log {
+    min-height: 140px;
+  }
+
+  .timeline-item {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 960px) {
+  .site-header nav {
+    font-size: 13px;
+    gap: 12px;
+  }
+
+  .hero-grid {
+    gap: 28px;
+  }
+
+  .experience-grid,
+  .checkout-grid,
+  .admin-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .site-footer .container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 520px) {
+  .brand {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero h2 {
+    font-size: 26px;
+  }
+
+  .card-footer {
+    font-size: 12px;
+  }
+
+  button,
+  .primary,
+  .ghost,
+  .auth-button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .summary-list {
+    font-size: 13px;
   }
 }
